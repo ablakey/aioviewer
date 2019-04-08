@@ -24,9 +24,10 @@ class AioviewerExample:
 
     async def make_http_request(self):
         while True:
-            response = await loop.run_in_executor(None, requests.get, 'http://localhost:8080/example')
+            response = await loop.run_in_executor(None, requests.get, 'http://localhost:8081/example')
+            await asyncio.sleep(1)
             print(response.text)
-            await asyncio.sleep(5)
+            await asyncio.sleep(2)
 
     async def handle_http_request(self, request):
         return web.Response(text='HTTP response generated at {} seconds.'.format(time.time() - self.started))
@@ -35,7 +36,7 @@ class AioviewerExample:
         # Web server setup.
         runner = web.AppRunner(self.server)
         loop.run_until_complete(runner.setup())
-        site = web.TCPSite(runner)
+        site = web.TCPSite(runner, port=8081)
         loop.run_until_complete(site.start())
 
         # Gather all infinite loop coroutines.
