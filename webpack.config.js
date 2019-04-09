@@ -1,29 +1,25 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: './client.jsx',
+  entry: './clientsrc/Application.jsx',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['*', '.js', '.jsx']
+        test: /\.(js|jsx)$/,
+        use: ['babel-loader'],
+      },
+    ],
   },
   output: {
+    filename: 'bundle.js',
     path: __dirname + '/static',
     publicPath: '/',
-    filename: 'bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
-  devServer: {
-    contentBase: './static',
-    hot: true
-  }
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+  },
 };
