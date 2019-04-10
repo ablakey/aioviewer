@@ -4,6 +4,7 @@
     "quotemark": [
       true,
       "single"
-    ]
+    ],
+    "object-literal-sort-keys": false
   }
 }

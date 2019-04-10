@@ -32,6 +32,15 @@ class AioviewerExample:
     async def handle_http_request(self, request):
         return web.Response(text='HTTP response generated at {} seconds.'.format(time.time() - self.started))
 
+    async def ticker(self):
+        while True:
+            await asyncio.sleep(2)
+            await asyncio.sleep(2)
+            await asyncio.sleep(2)
+            await asyncio.sleep(2)
+            await asyncio.sleep(2)
+            await asyncio.sleep(2)
+
     def start(self):
         # Web server setup.
         runner = web.AppRunner(self.server)
@@ -42,7 +51,8 @@ class AioviewerExample:
         # Gather all infinite loop coroutines.
         loop.run_until_complete(asyncio.gather(
             self.report_uptime(),
-            self.make_http_request()
+            self.make_http_request(),
+            self.ticker()
         ))
 
 

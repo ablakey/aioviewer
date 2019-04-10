@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'babel-polyfill';
+import Tree from './Tree';
+import CodeViewer from './CodeViewer';
 
 function dedupe(arr) {
   return [...new Set(arr.map(r => r.split(' ')[0]))];
@@ -42,18 +44,23 @@ class Application extends React.Component {
   }
 
   render() {
+    const lineNumbers = this.state.reports
+      .filter(r => r.split(' ')[0] === this.state.selectedFile)
+      .map(r => parseInt(r.split(' ')[1], 10));
+
     return (
       <div className='container'>
         <div className='left'>
           <Tree
             onSelect={f => this.setState({ selectedFile: f })}
             reports={this.state.reports}
+            selectedFile={this.state.selectedFile}
           />
         </div>
         <div className='right'>
-          <FrameRight
+          <CodeViewer
             source={this.state.selectedFile ? this.state.sources[this.state.selectedFile] : ''}
-            lineNumbers={[1, 3]}
+            lineNumbers={lineNumbers}
           />
         </div>
       </div>
